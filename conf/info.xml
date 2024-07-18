@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget version="0.2">
+    <title xml:lang="ko">히트맵 위젯</title>
+    <title xml:lang="en">heatmap widget</title>
+    <description xml:lang="ko">본인의 글 작성 빈도를 GitHub 스타일 히트맵으로 보여주는 위젯입니다.</description>
+    <description xml:lang="en">Github style heatmap widget that shows a user how often he creates posts.</description>
+    <version>1.0.0</version>
+    <date>2024-07-18</date>
+    <author email_address="seungh.sh@gmail.com" link="https://github.com/seungh/rhymix-heatmap-widget">
+        <name xml:lang="ko">Seunghan</name>
+        <name xml:lang="en">Seunghan</name>
+    </author>
+    <extra_vars>
+        <group>
+            <var id="module_srls" type="module_srl_list">
+                <name xml:lang="ko">대상 페이지</name>
+                <name xml:lang="en">Target Module</name>
+                <description xml:lang="ko">글 작성 빈도를 보여줄 게시판을 선택하세요. 선택하지 않으면 모든 게시판을 대상으로 합니다.</description>
+                <description xml:lang="en">Select modules to show how often a user writes posts. If not selected, all modules are targeted.</description>
+            </var>
+            <var id="title" type="text">
+                <name xml:lang="ko">제목</name>
+                <name xml:lang="en">Title</name>
+                <description xml:lang="ko">비워두는 경우 해당 기간 총 게시글 수를 표기합니다.</description>
+                <description xml:lang="en">If left blank, the total number of posts will be displayed.</description>
+            </var>
+            <!-- 
+            <var id="type" type="select">
+                <name xml:lang="ko">타입</name>
+                <name xml:lang="en">Type</name>
+                <options>
+                    <value>horizontal</value>
+                    <name xml:lang="ko">가로</name>
+                    <name xml:lang="en">Horizontal</name>
+                </options>
+                <options>
+                    <value>vertical</value>
+                    <name xml:lang="ko">세로</name>
+                    <name xml:lang="en">Vertical</name>
+                </options>
+            </var> 
+            -->
+        </group>
+        <group>
+			<title xml:lang="ko">레벨 별 게시글 수</title>
+			<title xml:lang="en">레벨 별 게시글 수</title>
+            <var id="posts_level_1" type="text">
+                <name xml:lang="ko">레벨 1</name>
+                <name xml:lang="en">Level 1</name>
+                <description xml:lang="ko">게시글 수가 설정값에 도달하면 해당 레벨 색상코드를 출력합니다. 0 보다 커야 합니다. (기본값: 1)</description>
+                <description xml:lang="en">If the number of posts reaches the set value, output the this level color code. (default: 1)</description>
+            </var>
+            <var id="posts_level_2" type="text">
+                <name xml:lang="ko">레벨 2</name>
+                <name xml:lang="en">Level 2</name>
+                <description xml:lang="ko">게시글 수가 설정값에 도달하면 해당 레벨 색상코드를 출력합니다. 레벨 1 설정값보다 커야 합니다. (기본값: 2)</description>
+                <description xml:lang="en">If the number of posts reaches the set value, output the this level color code. (default: 2)</description>
+            </var>
+            <var id="posts_level_3" type="text">
+                <name xml:lang="ko">레벨 3</name>
+                <name xml:lang="en">Level 3</name>
+                <description xml:lang="ko">게시글 수가 설정값에 도달하면 해당 레벨 색상코드를 출력합니다. 레벨 2 설정값보다 커야 합니다. (기본값: 3)</description>
+                <description xml:lang="en">If the number of posts reaches the set value, output the this level color code. (default: 3)</description>
+            </var>
+            <var id="posts_level_4" type="text">
+                <name xml:lang="ko">레벨 4</name>
+                <name xml:lang="en">Level 4</name>
+                <description xml:lang="ko">게시글 수가 설정값에 도달하면 해당 레벨 색상코드를 출력합니다. 레벨 3 설정값보다 커야 합니다. (기본값: 4)</description>
+                <description xml:lang="en">If the number of posts reaches the set value, output the this level color code. (default: 4)</description>
+            </var>
+        </group>
+    </extra_vars>
+</widget>
