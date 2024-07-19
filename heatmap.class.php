@@ -15,13 +15,12 @@ class heatmap extends WidgetHandler
             $last_date = date("Y-m-d", strtotime($search_year . "1231"));
         }
         else {
-            $first_date = date("Y-m-d", strtotime("last sunday"));
-            $first_date = date("Y-m-d", strtotime($first_date . "-52 weeks"));
+            $first_date = date("Y-m-d", strtotime("last sunday - 52 weeks"));
             $last_date = date("Y-m-d");
         }
 
         $obj = new stdClass();
-        $obj->member_srl = Context::get('logged_info')->member_srl;;
+        $obj->member_srl = Context::get('logged_info')->member_srl;
         $obj->module_srl = $args->module_srls;
         $obj->first_date = str_replace("-", "", $first_date);
         $obj->last_date =  str_replace("-", "", $last_date);
@@ -29,12 +28,6 @@ class heatmap extends WidgetHandler
 
         $widget_info = new stdClass();
         $widget_info->title = $args->title;
-        $lv1 = $args->posts_level_1 == NULL ? 1 : (int)$args->posts_level_1;
-        $lv2 = $args->posts_level_2 == NULL ? 2 : (int)$args->posts_level_2;
-        $lv3 = $args->posts_level_3 == NULL ? 3 : (int)$args->posts_level_3;
-        $lv4 = $args->posts_level_4 == NULL ? 4 : (int)$args->posts_level_4;
-        $widget_info->posts_level = (0 < $lv1 && $lv1 < $lv2 && $lv2 < $lv3 && $lv3 < $lv4) ?
-            array($lv1, $lv2, $lv3, $lv4) : array(1, 2, 3, 4);
         Context::set("widget_info", $widget_info);
 
         $hm_data = new stdClass();
@@ -43,6 +36,14 @@ class heatmap extends WidgetHandler
         $hm_data->search_year = $search_year ? $search_year : NULL;
         $hm_data->reg_year = date("Y", strtotime(Context::get('logged_info')->regdate));
         $hm_data->this_year = date("Y");
+
+        $lv1 = $args->posts_level_1 ?? 1;
+        $lv2 = $args->posts_level_2 ?? 2;
+        $lv3 = $args->posts_level_3 ?? 3;
+        $lv4 = $args->posts_level_4 ?? 4;
+        $hm_data->posts_level = (0 < $lv1 && $lv1 < $lv2 && $lv2 < $lv3 && $lv3 < $lv4) ?
+            array($lv1, $lv2, $lv3, $lv4) : array(1, 2, 3, 4);
+
         $output_data = array();
         if ($output->toBool()) {
             foreach ($output->data as $val) {

@@ -3,8 +3,12 @@
 @load ("js/script.js")
 
 @auth
-<div>
-    <div class="heatmap-head">
+<section class="heatmap-section"
+        data-output-data="@json($hm_data->output_data)"
+        data-posts-level="@json($hm_data->posts_level)"
+        data-first-date="{{ $hm_data->first_date }}"
+        data-last-date="{{ $hm_data->last_date }}">
+    <header class="heatmap-head">
         @if ($widget_info->title)
         <div class="heatmap-title">{{ $widget_info->title }}</div>
         @else
@@ -17,11 +21,11 @@
             </span>
             <div class="heatmap-year-list">    
                 @foreach(range($hm_data->this_year, $hm_data->reg_year) as $year)
-                <a href="{{ getUrl('search_year', $year) }}">{{ $year }}</a>
+                <a href="#" data-search-year="{{ $year }}">{{ $year }}</a>
                 @endforeach
             </div>
         </div>
-    </div>
+    </header>
     <div class="heatmap-wrapper">
         <div class="heatmap-container" id="heatmap-container">
             <div class="heatmap" id="heatmap"></div>
@@ -36,14 +40,14 @@
             <div class="color-label-text">More</div>
         </div>
     </div>
-</div>
+</section>
 
 <script>
-    const heatmapData = @json($hm_data->output_data);
-    const postsLevel = @json($widget_info->posts_level);
-    const firstDate = '{$hm_data->first_date}';
-    const lastDate = '{$hm_data->last_date}';
-    createHeatmap('heatmap', heatmapData, postsLevel, firstDate, lastDate);
+    const heatmapSection = document.querySelector('.heatmap-section');
+    const outputData = JSON.parse(heatmapSection.dataset.outputData);
+    const postsLevel = JSON.parse(heatmapSection.dataset.postsLevel);
+    const firstDate = heatmapSection.dataset.firstDate;
+    const lastDate = heatmapSection.dataset.lastDate;
+    createHeatmap('heatmap', outputData, postsLevel, firstDate, lastDate);
 </script>
 @endauth
-

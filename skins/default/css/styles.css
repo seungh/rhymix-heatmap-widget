@@ -4,7 +4,7 @@
     font-style: normal;
     font-weight: normal;
     font-display: swap;
-    src: url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono') format('truetype');
+    src: url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap') format('truetype');
 }
 
 .heatmap-head {
@@ -112,7 +112,7 @@
 
 .day .tooltip {
     visibility: hidden;
-    width: 70px;
+    width: 80px;
     background-color: #1a1a1a;
     color: #fff;
     text-align: center;

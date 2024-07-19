@@ -4,6 +4,31 @@ const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
 const MAX_ROW = 8;
 const MAX_COLUMN = 53;
 
+jQuery(document).ready(function($) {
+	$(document).on('click', '.heatmap-year-list a', function(event) {
+		event.preventDefault();
+		$.ajax({
+			url: $(this).attr('href'),
+            type: 'GET',
+            data: {"search_year": $(this).attr('data-search-year')},
+            dataType: 'html',
+			success: function(resp) {
+                const newHeatmapSection = $(resp).find('.heatmap-section');
+                $('.heatmap-section').replaceWith(newHeatmapSection);
+                const outputData = $(resp).find('.heatmap-section').data("outputData");
+                const postsLevel = $(resp).find('.heatmap-section').data("postsLevel");
+                const firstDate = $(resp).find('.heatmap-section').data("firstDate");
+                const lastDate = $(resp).find('.heatmap-section').data("lastDate");
+                $(".heatmap").empty();
+                createHeatmap('heatmap', outputData, postsLevel, firstDate, lastDate);
+			},
+			error: function(request, status, error) {
+				alert('code: ' + request.status + '\n' + 'message: ' + request.responseText + '\n' + 'error: ' + error);
+			}
+		});
+	});
+});
+
 function createHeatmap(elementId, heatmapData, postsLevel, firstDate, lastDate) {
 
     function getLevelClass(postsLevel, countDoc) {
@@ -34,7 +59,7 @@ function createHeatmap(elementId, heatmapData, postsLevel, firstDate, lastDate) 
         heatmap.appendChild(div);
     }
 
-    const currDate = new Date(firstDate);    
+    const currDate = new Date(firstDate + "T01:00Z");
     let printMonthLabel = true;
     /* to avoid overlapping first two month labels */
     if (currDate.getDate() > 20) {
@@ -70,18 +95,18 @@ function createHeatmap(elementId, heatmapData, postsLevel, firstDate, lastDate) 
             }
 
             /* update day cell info in heatmap */
-            const dateIndex = currDate.toISOString().split('T')[0];
-            const countDoc = heatmapData[dateIndex] || 0;
+            dateIndex = currDate.toISOString().split('T')[0];
+            const countDocuments = heatmapData[dateIndex] || 0;
             div.className = 'day';
-            if (countDoc >= 0) {
-                const levelClass = getLevelClass(postsLevel, countDoc); 
+            if (countDocuments >= 0) {
+                const levelClass = getLevelClass(postsLevel, countDocuments);
                 div.classList.add(levelClass);
             }
 
             /* add tooltip to the day cell */
             const span = document.createElement('span');
             span.className = 'tooltip';
-            span.innerText = `${countDoc} posts on ${dateIndex}`;
+            span.innerText = `${countDocuments} posts on ${dateIndex}`;
             div.appendChild(span);
 
             /* update current date */
