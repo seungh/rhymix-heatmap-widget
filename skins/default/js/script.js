@@ -1,5 +1,5 @@
 
-const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Web', 'Thu', 'Fri', 'Sat'];
+const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const MAX_ROW = 8;
 const MAX_COLUMN = 53;
