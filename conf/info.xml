@@ -24,22 +24,22 @@
                 <description xml:lang="ko">비워두는 경우 해당 기간 총 게시글 수를 표기합니다.</description>
                 <description xml:lang="en">If left blank, the total number of posts will be displayed.</description>
             </var>
-            <!-- 
-            <var id="type" type="select">
-                <name xml:lang="ko">타입</name>
-                <name xml:lang="en">Type</name>
+            <var id="default_display" type="select">
+                <name xml:lang="ko">초기화면</name>
+                <name xml:lang="en">Default Display</name>
                 <options>
-                    <value>horizontal</value>
-                    <name xml:lang="ko">가로</name>
-                    <name xml:lang="en">Horizontal</name>
+                    <value>last_365_days</value>
+                    <name xml:lang="ko">최근 365일</name>
+                    <name xml:lang="en">Last 365 days</name>
                 </options>
                 <options>
-                    <value>vertical</value>
-                    <name xml:lang="ko">세로</name>
-                    <name xml:lang="en">Vertical</name>
+                    <value>this_year</value>
+                    <name xml:lang="ko">올해</name>
+                    <name xml:lang="en">This year</name>
                 </options>
-            </var> 
-            -->
+                <description xml:lang="ko"></description>
+                <description xml:lang="en"></description>
+            </var>
         </group>
         <group>
 			<title xml:lang="ko">레벨 별 게시글 수</title>

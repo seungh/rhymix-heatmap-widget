@@ -4,7 +4,8 @@ class heatmap extends WidgetHandler
 {
     function proc($args)
     {
-        $search_year = Context::get('search_year') ? Context::get('search_year') : NULL;
+        $search_year = Context::get('search_year') ? Context::get('search_year') : null;
+        $search_year = ($search_year === null && $args->default_display == "this_year") ? date("Y") : $search_year;
         if ($search_year) {
             $first_date = date("Y-m-d", strtotime($search_year . "0101"));
             $last_date = date("Y-m-d", strtotime($search_year . "1231"));
