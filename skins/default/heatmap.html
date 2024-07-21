@@ -2,7 +2,6 @@
 @load ("css/styles.css")
 @load ("js/script.js")
 
-@auth
 <section class="heatmap-section"
         data-output-data="@json($hm_data->output_data)"
         data-posts-level="@json($hm_data->posts_level)"
@@ -12,8 +11,10 @@
         @if ($widget_info->title)
         <div class="heatmap-title">{{ $widget_info->title }}</div>
         @else
-        <div class="heatmap-title">{{ array_sum($hm_data->output_data) }} posts</div>
+        <div class="heatmap-title">{{ array_sum($hm_data->output_data ?? []) }} posts</div>
         @endif
+
+        @auth
         <div class="heatmap-year">
             <span class="heatmap-year-button">
                 {{ $hm_data->search_year ? $hm_data->search_year : "last year" }}
@@ -25,8 +26,15 @@
                 @endforeach
             </div>
         </div>
+        @endauth
     </header>
     <div class="heatmap-wrapper">
+        @guest
+        <div class="heatmap-overlay"></div>
+        <div class="heatmap-login">
+            <a href="{{ getUrl('act','dispMemberLoginForm') }}">{{ $lang->cmd_login }}</button>
+        </div>
+        @endguest
         <div class="heatmap-container" id="heatmap-container">
             <div class="heatmap" id="heatmap"></div>
         </div>
@@ -50,4 +58,3 @@
     const lastDate = heatmapSection.dataset.lastDate;
     createHeatmap('heatmap', outputData, postsLevel, firstDate, lastDate);
 </script>
-@endauth
