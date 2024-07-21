@@ -1,9 +1,3 @@
-
-const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-const MAX_ROW = 8;
-const MAX_COLUMN = 53;
-
 jQuery(document).ready(function($) {
 	$(document).on('click', '.heatmap-year-list a', function(event) {
 		event.preventDefault();
@@ -30,6 +24,11 @@ jQuery(document).ready(function($) {
 });
 
 function createHeatmap(elementId, heatmapData, postsLevel, firstDate, lastDate) {
+
+    const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const MAX_ROW = 8;
+    const MAX_COLUMN = 53;
 
     function getLevelClass(postsLevel, countDoc) {
         if (countDoc < postsLevel[0]) {
