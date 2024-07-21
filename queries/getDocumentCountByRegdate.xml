@@ -1,0 +1,25 @@
+<query id="getNewestDocuments" action="select">
+    <tables>
+        <table name="documents" />
+    </tables>
+    <columns>
+        <!-- <column name="documents.document_srl" />
+        <column name="documents.module_srl" />
+        <column name="documents.title" /> -->
+        <column name="documents.regdate" />
+        <column name="count(*)" alias="count" />
+    </columns>
+    <conditions>
+        <condition operation="in" column="documents.module_srl" var="module_srl" filter="number" pipe="and" />
+		<condition operation="equal" column="documents.member_srl" var="member_srl" notnull="notnull" pipe="and" />
+        <condition operation="more" column="documents.regdate" var="first_date" notnull="notnull" pipe="and" />
+        <condition operation="less" column="documents.regdate" var="last_date" notnull="notnull" pipe="and" />
+    </conditions>
+    <groups>
+        <group column="substr(documents.regdate, 1, 8)" />
+    </groups>     
+    <navigation>
+        <index var="sort_index" default="regdate" order="inc" />
+        <list_count var="list_count" default="*" />
+    </navigation>
+</query>

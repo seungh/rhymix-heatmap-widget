@@ -41,18 +41,13 @@ class heatmap extends WidgetHandler
             $obj->module_srl = $args->module_srls;
             $obj->first_date = str_replace("-", "", $first_date);
             $obj->last_date =  str_replace("-", "", $last_date);
-            $output = executeQueryArray("widgets.heatmap.getDocuments", $obj);
+            $output = executeQueryArray("widgets.heatmap.getDocumentCountByRegdate", $obj);
 
             if ($output->toBool()) {
                 $output_data = array();
                 foreach ($output->data as $val) {
                     $date = date("Y-m-d", strtotime($val->regdate));
-                    if (array_key_exists($date, $output_data)) {
-                        $output_data[$date] += 1;
-                    }
-                    else {
-                        $output_data[$date] = 1;
-                    }
+                    $output_data[$date] = $val->count;
                 }
             }
         }
