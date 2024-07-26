@@ -31,15 +31,15 @@ function createHeatmapVertical(elementId, heatmapData, postsLevel, firstDate, la
     const MAX_COLUMN = 8;
 
     function getLevelClass(postsLevel, countDoc) {
-        if (countDoc < postsLevel[0]) {
+        if (countDoc < postsLevel[1]) {
             return 'level-0';
-        } else if (countDoc < postsLevel[1]) {
-            return 'level-1';
         } else if (countDoc < postsLevel[2]) {
-            return 'level-2';
+            return 'level-1';
         } else if (countDoc < postsLevel[3]) {
+            return 'level-2';
+        } else if (countDoc < postsLevel[4]) {
             return 'level-3';
-        } else if (postsLevel[3] <= countDoc) {
+        } else if (postsLevel[4] <= countDoc) {
             return 'level-4';
         }
     }

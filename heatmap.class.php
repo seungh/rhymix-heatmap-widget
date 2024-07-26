@@ -32,7 +32,7 @@ class heatmap extends WidgetHandler
         $lv3 = $args->posts_level_3 ?? 3;
         $lv4 = $args->posts_level_4 ?? 4;
         $hm_data->posts_level = (0 < $lv1 && $lv1 < $lv2 && $lv2 < $lv3 && $lv3 < $lv4) ?
-            array($lv1, $lv2, $lv3, $lv4) : array(1, 2, 3, 4);
+            array(0, $lv1, $lv2, $lv3, $lv4) : array(0, 1, 2, 3, 4);
 
         $is_logged = Context::get('is_logged');
         if ($is_logged) {

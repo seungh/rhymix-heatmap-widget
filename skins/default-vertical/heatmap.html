@@ -43,7 +43,7 @@
             <div class="color-label-text">Less</div>
             @foreach(range(0, 4) as $i)
             <div class="color-label-cell day level-{$i}">
-                <span class="tooltip">{$i} posts</span>
+                <span class="tooltip">{$hm_data->posts_level[$i]} posts</span>
             </div>
             @endforeach
             <div class="color-label-text">More</div>
