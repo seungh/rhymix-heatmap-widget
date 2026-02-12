@@ -4,11 +4,11 @@
     <title xml:lang="en">heatmap widget</title>
     <description xml:lang="ko">본인의 글 작성 빈도를 GitHub 스타일 히트맵으로 보여주는 위젯입니다.</description>
     <description xml:lang="en">Github style heatmap widget that shows a user how often he creates posts.</description>
-    <version>1.0.1</version>
-    <date>2024-07-18</date>
+    <version>1.0.2</version>
+    <date>2026-02-12</date>
     <author email_address="seungh.sh@gmail.com" link="https://github.com/seungh/rhymix-heatmap-widget">
-        <name xml:lang="ko">Seunghan</name>
-        <name xml:lang="en">Seunghan</name>
+        <name xml:lang="ko">seungh</name>
+        <name xml:lang="en">seungh</name>
     </author>
     <extra_vars>
         <group>
