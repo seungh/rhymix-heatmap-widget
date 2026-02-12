@@ -18,10 +18,10 @@
         @auth
         <div class="heatmap-year">
             <span class="heatmap-year-button">
-                {{ $hm_data->search_year ? $hm_data->search_year : "last year" }}
+                {{ $hm_data->search_year ? $hm_data->search_year : "365 days" }}
                 <div class="dropdown-caret"></div>
             </span>
-            <div class="heatmap-year-list">    
+            <div class="heatmap-year-list">
                 @foreach(range($hm_data->this_year, $hm_data->reg_year) as $year)
                 <a href="#" data-search-year="{{ $year }}">{{ $year }}</a>
                 @endforeach
@@ -48,6 +48,8 @@
             @endforeach
             <div class="color-label-text">More</div>
         </div>
+    </div>
+    <div class="heatmap-documents-container" id="documents-list-container">
     </div>
 </section>
 

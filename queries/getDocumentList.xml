@@ -1,0 +1,16 @@
+<query id="getDocumentList" action="select">
+    <tables>
+        <table name="documents" />
+    </tables>
+    <columns>
+        <column name="*" />
+    </columns>
+    <conditions>
+        <condition operation="in" column="documents.module_srl" var="module_srl" filter="number" pipe="and" />
+		<condition operation="equal" column="documents.member_srl" var="member_srl" notnull="notnull" pipe="and" />
+        <condition operation="equal" column="substr(documents.regdate, 1, 8)" var="written_at" notnull="notnull" pipe="and" />
+    </conditions>
+    <navigation>
+        <index var="sort_index" default="regdate" order="desc" />
+    </navigation>
+</query>
