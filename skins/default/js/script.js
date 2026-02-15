@@ -165,8 +165,6 @@ window.HeatmapDefault.createHeatmap = function(heatmapElement, heatmapData, post
             }
             /* check for the last cell */
             if (currDate > new Date(lastDate)) {
-                console.log("Reached the end date:", currDate.toISOString().split('T')[0]);
-                console.log("Curr date:", currDate, "Last date:", lastDate);
                 break;
             }
 
