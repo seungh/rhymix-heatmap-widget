@@ -44,8 +44,8 @@ class heatmap extends WidgetHandler
             $obj = new stdClass();
             $obj->member_srl = Context::get('logged_info')->member_srl;
             $obj->module_srl = $args->module_srls;
-            $obj->first_date = str_replace("-", "", date("Y-m-d", strtotime("last sunday - 52 weeks")));
-            $obj->last_date =  str_replace("-", "", date("Y-m-d", strtotime("today + 1 day")));
+            $obj->first_date = str_replace("-", "", date("Y-m-d", strtotime($first_date)));
+            $obj->last_date =  str_replace("-", "", date("Y-m-d", strtotime($last_date . "today + 1 day")));
             $output = executeQueryArray("widgets.heatmap.getDocumentCountByRegdate", $obj);
             
             if ($output->toBool()) {
