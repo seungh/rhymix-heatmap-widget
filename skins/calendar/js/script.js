@@ -138,7 +138,6 @@ window.HeatmapMonthly.createHeatmap = function(container, monthDotsContainer, do
     const endDate = new Date(lastDate);
     startDate.setHours(0, 0, 0, 0);
     endDate.setHours(23, 59, 59, 999);
-    console.log(`${startDate} ~ ${endDate}`);
     const monthsData = [];
     
     // Get the range of months to display
@@ -199,8 +198,21 @@ window.HeatmapMonthly.createHeatmap = function(container, monthDotsContainer, do
         }
     }
     
+    // Find current month index for initial scroll
+    const today = new Date();
+    const todayYear = today.getFullYear();
+    const todayMonth = today.getMonth();
+    let currentMonthIndex = 0;
+    let hasCurrentMonth = false;
+    
     // Render monthly calendars
     monthsData.forEach((month, index) => {
+        // Track current month index
+        if (month.year === todayYear && month.month === todayMonth) {
+            currentMonthIndex = index;
+            hasCurrentMonth = true;
+        }
+        
         const monthDiv = document.createElement('div');
         monthDiv.className = 'monthly-calendar';
         monthDiv.dataset.monthIndex = index;
@@ -255,17 +267,28 @@ window.HeatmapMonthly.createHeatmap = function(container, monthDotsContainer, do
         dot.className = 'month-dot';
         dot.dataset.monthIndex = index;
         dot.setAttribute('aria-label', `${month.monthName} ${month.year}`);
-        if (index === 0) {
-            dot.classList.add('is-active');
+        
+        // Mark current month (today's month)
+        const isCurrentMonth = month.year === todayYear && month.month === todayMonth;
+        if (isCurrentMonth) {
+            dot.classList.add('is-current-month');
+            dot.classList.add('is-active'); // Initially active on current month
         }
+        
         monthDotsContainer.appendChild(dot);
     });
     
-    // Initialize slider functionality
-    window.HeatmapMonthly.initMonthSlider(container, monthDotsContainer, monthsData.length);
+    // If current month doesn't exist in the data, activate and scroll to first month
+    if (!hasCurrentMonth && monthDotsContainer.children.length > 0) {
+        monthDotsContainer.children[0].classList.add('is-active');
+        currentMonthIndex = 0;
+    }
+    
+    // Initialize slider functionality with current month index
+    window.HeatmapMonthly.initMonthSlider(container, monthDotsContainer, monthsData.length, currentMonthIndex);
 }
 
-window.HeatmapMonthly.initMonthSlider = function(container, dotsContainer, monthCount) {
+window.HeatmapMonthly.initMonthSlider = function(container, dotsContainer, monthCount, initialMonthIndex) {
     const dots = dotsContainer.querySelectorAll('.month-dot');
     const calendars = container.querySelectorAll('.monthly-calendar');
     const slider = container.parentElement; // Get the actual scrolling element
@@ -277,6 +300,9 @@ window.HeatmapMonthly.initMonthSlider = function(container, dotsContainer, month
         return;
     }
     slider.dataset.sliderInitialized = 'true';
+    
+    // Set initial month index (default to 0 if not provided)
+    const startIndex = initialMonthIndex !== undefined ? initialMonthIndex : 0;
     
     function scrollToMonth(index) {
         if (!calendars[index]) return;
@@ -337,6 +363,12 @@ window.HeatmapMonthly.initMonthSlider = function(container, dotsContainer, month
     
     // Store the scroll handler for potential cleanup
     slider._heatmapScrollHandler = scrollHandler;
+    
+    // Scroll to initial month (current month) immediately without animation
+    if (calendars[startIndex]) {
+        const targetScrollLeft = calendars[startIndex].offsetLeft;
+        slider.scrollLeft = targetScrollLeft; // Direct assignment for instant scroll
+    }
 }
 
 window.HeatmapMonthly.renderDocumentsList = function(container, documents, dateStr, count) {

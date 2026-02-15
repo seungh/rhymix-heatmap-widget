@@ -133,7 +133,6 @@ window.HeatmapDefault.createHeatmap = function(heatmapElement, heatmapData, post
         heatmap.appendChild(div);
     }
 
-    console.log("firstDate:", firstDate, "lastDate:", lastDate);
     const currDate = new Date(firstDate);
     let printMonthLabel = true;
     /* to avoid overlapping first two month labels */
