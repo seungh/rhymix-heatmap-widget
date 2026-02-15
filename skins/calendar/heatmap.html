@@ -1,0 +1,82 @@
+@version(2)
+@load ("css/styles.css")
+@load ("js/script.js")
+@load ("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap")
+
+<?php $widget_id = 'heatmap_' . uniqid(); ?>
+<section class="heatmap-section heatmap-monthly"
+        data-widget-id="{{ $widget_id }}"
+        data-output-data="@json($hm_data->output_data)"
+        data-posts-level="@json($hm_data->posts_level)"
+        data-first-date="{{ $hm_data->first_date }}"
+        data-last-date="{{ $hm_data->last_date }}">
+    <header class="heatmap-head">
+        @if ($widget_info->title)
+        <div class="heatmap-title">{{ $widget_info->title }}</div>
+        @else
+        <div class="heatmap-title">{{ array_sum($hm_data->output_data ?? []) }} posts</div>
+        @endif
+
+        @auth
+        <div class="heatmap-year">
+            <span class="heatmap-year-button">
+                {{ $hm_data->search_year ? $hm_data->search_year : "365 days" }}
+                <div class="dropdown-caret"></div>
+            </span>
+            <div class="heatmap-year-list">
+                @foreach(range($hm_data->this_year, $hm_data->reg_year) as $year)
+                <a href="#" data-search-year="{{ $year }}">{{ $year }}</a>
+                @endforeach
+            </div>
+        </div>
+        @endauth
+    </header>
+    <div class="heatmap-wrapper">
+        @guest
+        <div class="heatmap-overlay"></div>
+        <div class="heatmap-login">
+            <a href="{{ getUrl('act','dispMemberLoginForm') }}">{{ $lang->cmd_login }}</a>
+        </div>
+        @endguest
+        <div class="heatmap-slider">
+            <div class="heatmap-container-monthly" data-role="container">
+            </div>
+        </div>
+        <div class="heatmap-month-dots" data-role="dots">
+        </div>
+        <div class="color-label-container">
+            <div class="color-label-text">Less</div>
+            @foreach(range(0, 4) as $i)
+            <div class="color-label-cell level-{$i}">
+                <span class="tooltip">{$i} posts</span>
+            </div>
+            @endforeach
+            <div class="color-label-text">More</div>
+        </div>
+    </div>
+    <div class="heatmap-documents-container" data-role="documents">
+    </div>
+</section>
+
+<script>
+(function() {
+    const heatmapSection = document.querySelector('.heatmap-section[data-widget-id="{{ $widget_id }}"]');
+    if (!heatmapSection || heatmapSection.dataset.initialized === 'true') return;
+    
+    // Mark as initialized to prevent duplicate initialization
+    heatmapSection.dataset.initialized = 'true';
+    
+    const outputData = JSON.parse(heatmapSection.dataset.outputData);
+    const postsLevel = JSON.parse(heatmapSection.dataset.postsLevel);
+    const firstDate = heatmapSection.dataset.firstDate;
+    const lastDate = heatmapSection.dataset.lastDate;
+    
+    const container = heatmapSection.querySelector('[data-role="container"]');
+    const dotsContainer = heatmapSection.querySelector('[data-role="dots"]');
+    const documentsContainer = heatmapSection.querySelector('[data-role="documents"]');
+    
+    if (container && dotsContainer) {
+        window.HeatmapMonthly.createHeatmap(container, dotsContainer, documentsContainer, outputData, postsLevel, firstDate, lastDate);
+    }
+})();
+</script>

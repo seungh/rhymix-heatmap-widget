@@ -13,11 +13,11 @@ class heatmap extends WidgetHandler
         $search_year = ($search_year === null && $args->default_display == "this_year") ? date("Y") : $search_year;
         if ($search_year) {
             $first_date = date("Y-m-d", strtotime($search_year . "0101"));
-            $last_date = date("Y-m-d", strtotime($search_year . "1231 + 1 day"));
+            $last_date = date("Y-m-d", strtotime($search_year . "1231"));
         }
         else {
             $first_date = date("Y-m-d", strtotime("last sunday - 52 weeks"));
-            $last_date = date("Y-m-d", strtotime("today + 1 day"));
+            $last_date = date("Y-m-d");
         }
 
         $widget_info = new stdClass();
@@ -44,8 +44,8 @@ class heatmap extends WidgetHandler
             $obj = new stdClass();
             $obj->member_srl = Context::get('logged_info')->member_srl;
             $obj->module_srl = $args->module_srls;
-            $obj->first_date = str_replace("-", "", $first_date);
-            $obj->last_date =  str_replace("-", "", $last_date);
+            $obj->first_date = str_replace("-", "", date("Y-m-d", strtotime("last sunday - 52 weeks")));
+            $obj->last_date =  str_replace("-", "", date("Y-m-d", strtotime("today + 1 day")));
             $output = executeQueryArray("widgets.heatmap.getDocumentCountByRegdate", $obj);
             
             if ($output->toBool()) {

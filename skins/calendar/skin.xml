@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skin version="0.2">
+    <title xml:lang="ko">달력 스킨</title>
+    <title xml:lang="en">Calendar skin</title>
+    <description xml:lang="ko">히트맵 달력형 스킨</description>
+    <description xml:lang="en">Calendar-style heatmap skin</description>
+    <version>1.0.0</version>
+    <date>2026-02-15</date>
+    <author email_address="seungh.sh@gmail.com" link="https://github.com/seungh/rhymix-heatmap-widget">
+        <name xml:lang="ko">seungh</name>
+        <name xml:lang="en">seungh</name>
+    </author>
+</skin>
