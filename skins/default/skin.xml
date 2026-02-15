@@ -4,8 +4,8 @@
     <title xml:lang="en">Default skin</title>
     <description xml:lang="ko">히트맵 기본스킨</description>
     <description xml:lang="en">Heatmap default skin</description>
-    <version>1.0.2</version>
-    <date>2026-02-12</date>
+    <version>1.0.3</version>
+    <date>2026-02-15</date>
     <author email_address="seungh.sh@gmail.com" link="https://github.com/seungh/rhymix-heatmap-widget">
         <name xml:lang="ko">seungh</name>
         <name xml:lang="en">seungh</name>
