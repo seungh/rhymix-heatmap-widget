@@ -70,7 +70,7 @@ class heatmap extends WidgetHandler
 		$tpl_file = 'heatmap';
 
         /* compile template */
-        $oTemplate = &TemplateHandler::getInstance();
+        $oTemplate = TemplateHandler::getInstance();
         return $oTemplate->compile($tpl_path, $tpl_file);
     }
 
