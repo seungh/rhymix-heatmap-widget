@@ -1,23 +1,24 @@
+/* Default-vertical skin specific styles - namespace to avoid conflicts */
 
-.heatmap-vertical-head {
+.heatmap-vertical-section .heatmap-vertical-head {
     display: flex;
     justify-content: space-between;
     margin: 4px 4px;
     padding: 0px 4px;
 }
 
-.heatmap-vertical-title {
+.heatmap-vertical-section .heatmap-vertical-title {
     font-family: "IBM Plex Mono", monospace;
     font-size: 12px;
 }
 
-.heatmap-vertical-year {
+.heatmap-vertical-section .heatmap-vertical-year {
     position : relative;
     display : inline-block;
     min-width: 80px;
 }
 
-.heatmap-vertical-year-button {
+.heatmap-vertical-section .heatmap-vertical-year-button {
     display: flex;
     justify-content: end;
     font-family: "IBM Plex Mono", monospace;
@@ -25,11 +26,11 @@
     align-items: center;
 }
 
-.darkmode .heatmap-vertical-year-list {
+.darkmode .heatmap-vertical-section .heatmap-vertical-year-list {
     background-color: #343434;
 }
 
-.heatmap-vertical-year-list {
+.heatmap-vertical-section .heatmap-vertical-year-list {
     display : none;
     justify-content: center;
     position : absolute;
@@ -49,24 +50,24 @@
     overflow-y: auto;
 }
 
-.heatmap-vertical-year:hover .heatmap-vertical-year-list {
+.heatmap-vertical-section .heatmap-vertical-year:hover .heatmap-vertical-year-list {
     display: block;
 }
 
-.heatmap-vertical-year-list a {
+.heatmap-vertical-section .heatmap-vertical-year-list a {
     display: block;
     padding: 2px;
 }
 
-.heatmap-vertical-year-list a:hover {
+.heatmap-vertical-section .heatmap-vertical-year-list a:hover {
     color: skyblue;
 }
 
-.darkmode .heatmap-vertical-wrapper {
+.darkmode .heatmap-vertical-section .heatmap-vertical-wrapper {
     background-color: #343434;
 }
 
-.heatmap-vertical-wrapper {
+.heatmap-vertical-section .heatmap-vertical-wrapper {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -78,7 +79,7 @@
     overflow-x: auto;
 }
 
-.heatmap-vertical-container {
+.heatmap-vertical-section .heatmap-vertical-container {
     display: flex;
     justify-content: center;
     margin-left: auto;
@@ -87,7 +88,7 @@
     margin-bottom: 4px;
 }
 
-.heatmap-vertical {
+.heatmap-vertical-section .heatmap-vertical {
     display: grid;
     grid-template-columns: repeat(8, 10px);
     grid-template-rows: repeat(54, 10px);
@@ -97,7 +98,7 @@
     width: 100%;
 }
 
-.day {
+.heatmap-vertical-section .day {
     background-color: #ebedf0;
     position: relative;
     border-radius: 2px;
@@ -105,7 +106,7 @@
     /* cursor: pointer; */
 }
 
-.day .tooltip {
+.heatmap-vertical-section .day .tooltip {
     visibility: hidden;
     width: 100px;
     background-color: #1a1a1a;
@@ -125,11 +126,11 @@
     font-size: 11px;
 }
 
-.day:hover .tooltip {
+.heatmap-vertical-section .day:hover .tooltip {
     visibility: visible;
 }
 
-.month-label {
+.heatmap-vertical-section .month-label {
     background-color: transparent;
     position: relative;
     font-family: "IBM Plex Mono", monospace;
@@ -138,7 +139,7 @@
     padding-right: 4px;
 }
 
-.weekday-label-left {
+.heatmap-vertical-section .weekday-label-left {
     display: flex;
     align-items: center;
     position: relative;
@@ -149,7 +150,7 @@
     direction: ltr; 
 }
 
-.weekday-label-right {
+.heatmap-vertical-section .weekday-label-right {
     display: flex;
     align-items: center;
     position: relative;
@@ -160,19 +161,19 @@
     direction: rtl;
 }
 
-.darkmode .day.level-0 { background-color: #161b22; }
-.darkmode .day.level-1 { background-color: #0e4429; }
-.darkmode .day.level-2 { background-color: #006d32; }
-.darkmode .day.level-3 { background-color: #26a641; }
-.darkmode .day.level-4 { background-color: #39d353; }
+.darkmode .heatmap-vertical-section .day.level-0 { background-color: #161b22; }
+.darkmode .heatmap-vertical-section .day.level-1 { background-color: #0e4429; }
+.darkmode .heatmap-vertical-section .day.level-2 { background-color: #006d32; }
+.darkmode .heatmap-vertical-section .day.level-3 { background-color: #26a641; }
+.darkmode .heatmap-vertical-section .day.level-4 { background-color: #39d353; }
 
-.day.level-0 { background-color: #ebedf0; }
-.day.level-1 { background-color: #c6e48b; }
-.day.level-2 { background-color: #7bc96f; }
-.day.level-3 { background-color: #239a3b; }
-.day.level-4 { background-color: #196127; }
+.heatmap-vertical-section .day.level-0 { background-color: #ebedf0; }
+.heatmap-vertical-section .day.level-1 { background-color: #c6e48b; }
+.heatmap-vertical-section .day.level-2 { background-color: #7bc96f; }
+.heatmap-vertical-section .day.level-3 { background-color: #239a3b; }
+.heatmap-vertical-section .day.level-4 { background-color: #196127; }
 
-.color-label-container {
+.heatmap-vertical-section .color-label-container {
     display: flex;
     justify-content: start;
     align-items: center;
@@ -181,19 +182,19 @@
     gap: 4px;
 }
 
-.color-label-cell {
+.heatmap-vertical-section .color-label-cell {
     width: 13px;
     height: 13px;
     border-radius: 3px;
 }
 
-.color-label-text {
+.heatmap-vertical-section .color-label-text {
     font-family: "IBM Plex Mono", monospace;
     font-size: 11px;
     margin: 0px 2px;
 }
 
-.dropdown-caret {
+.heatmap-vertical-section .dropdown-caret {
     border-bottom-color: #0000;
     border-left-color: #0000;
     border-right-color: #0000;
@@ -203,7 +204,7 @@
     margin-left: 4px;
 }
 
-.heatmap-overlay {
+.heatmap-vertical-section .heatmap-overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -213,7 +214,7 @@
     z-index: 2;
 }
 
-.heatmap-login {
+.heatmap-vertical-section .heatmap-login {
     position: absolute;
     display: flex;
     top: 50%;
@@ -227,7 +228,7 @@
     text-align: center;
 }
 
-.heatmap-login a {
+.heatmap-vertical-section .heatmap-login a {
     padding: 10px 20px;
     background-color: #007bff;
     color: white;
@@ -237,7 +238,7 @@
     width: 100px;
 }
 
-.heatmap-login a:hover {
+.heatmap-vertical-section .heatmap-login a:hover {
     background-color: #0056b3;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }

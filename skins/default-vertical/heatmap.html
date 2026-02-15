@@ -3,7 +3,9 @@
 @load ("js/script.js")
 @load ("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap")
 
+<?php $widget_id = 'heatmap_vertical_' . uniqid(); ?>
 <section class="heatmap-vertical-section"
+        data-widget-id="{{ $widget_id }}"
         data-output-data="@json($hm_data->output_data)"
         data-posts-level="@json($hm_data->posts_level)"
         data-first-date="{{ $hm_data->first_date }}"
@@ -36,8 +38,8 @@
             <a href="{{ getUrl('act','dispMemberLoginForm') }}">{{ $lang->cmd_login }}</a>
         </div>
         @endguest
-        <div class="heatmap-vertical-container" id="heatmap-container">
-            <div class="heatmap-vertical" id="heatmap-vertical"></div>
+        <div class="heatmap-vertical-container" data-role="heatmap-container">
+            <div class="heatmap-vertical" data-role="heatmap-vertical"></div>
         </div>
         <div class="color-label-container">
             <div class="color-label-text">Less</div>
@@ -52,10 +54,20 @@
 </section>
 
 <script>
-    const heatmapVerticalSection = document.querySelector('.heatmap-vertical-section');
+(function() {
+    const heatmapVerticalSection = document.querySelector('.heatmap-vertical-section[data-widget-id="{{ $widget_id }}"]');
+    if (!heatmapVerticalSection || heatmapVerticalSection.dataset.initialized === 'true') return;
+    
+    heatmapVerticalSection.dataset.initialized = 'true';
+    
     const outputDataVertical = JSON.parse(heatmapVerticalSection.dataset.outputData);
     const postsLevelVertical = JSON.parse(heatmapVerticalSection.dataset.postsLevel);
     const firstDateVertical = heatmapVerticalSection.dataset.firstDate;
     const lastDateVertical = heatmapVerticalSection.dataset.lastDate;
-    createHeatmapVertical('heatmap-vertical', outputDataVertical, postsLevelVertical, firstDateVertical, lastDateVertical);
+    
+    const heatmapElement = heatmapVerticalSection.querySelector('[data-role="heatmap-vertical"]');
+    if (heatmapElement) {
+        window.HeatmapVertical.createHeatmap(heatmapElement, outputDataVertical, postsLevelVertical, firstDateVertical, lastDateVertical);
+    }
+})();
 </script>

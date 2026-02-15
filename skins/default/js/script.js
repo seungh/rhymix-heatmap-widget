@@ -1,65 +1,104 @@
-jQuery(document).ready(function($) {
-    $(document).on('click', '.heatmap-year-list a', function(event) {
-        event.preventDefault();
-        $.ajax({
-            url: $(this).attr('href'),
-            type: 'GET',
-            data: {"search_year": $(this).attr('data-search-year')},
-            dataType: 'html',
-            success: function(resp) {
-                const newHeatmapSection = $(resp).find('.heatmap-section');
-                $('.heatmap-section').replaceWith(newHeatmapSection);
-                const outputData = $(resp).find('.heatmap-section').data("outputData");
-                const postsLevel = $(resp).find('.heatmap-section').data("postsLevel");
-                const firstDate = $(resp).find('.heatmap-section').data("firstDate");
-                const lastDate = $(resp).find('.heatmap-section').data("lastDate");
-                $(".heatmap").empty();
-                createHeatmap('heatmap', outputData, postsLevel, firstDate, lastDate);
-            },
-            error: function(request, status, error) {
-                alert('code: ' + request.status + '\n' + 'message: ' + request.responseText + '\n' + 'error: ' + error);
-            }
-        });
-    });
+// Default skin namespace to avoid conflicts
+window.HeatmapDefault = window.HeatmapDefault || {};
 
-    $(document).on('click', '.day', function(event) {
-        event.preventDefault();
-        const $dayCell = $(this);
-        const dateStr = $dayCell.data('date');
-        
-        if (!dateStr) return;
-        
-        // 모든 day 셀에서 active 클래스 제거
-        $('.day').removeClass('active');
-        // 현재 클릭한 셀에 active 클래스 추가
-        $dayCell.addClass('active');
-        
-        // Display loading indicator
-        $('#documents-list-container').html('<div class="documents-list-loading" style="text-align: center; padding: 20px;">Loading...</div>');
-        
-        $.ajax({
-            url: window.location.href,
-            type: 'GET',
-            data: {
-                "written_at": dateStr
-            },
-            dataType: 'json',
-            success: function(resp) {
-                if (resp.success) {
-                    renderDocumentsList(resp.documents, resp.date, resp.count);
-                } else {
-                    $('#documents-list-container').html('<div class="documents-list-empty"><div class="documents-empty-text">오류가 발생했습니다.</div></div>');
+// Store event handlers to prevent duplicate registration
+if (!window.heatmapDefaultHandlersInitialized) {
+    window.heatmapDefaultHandlersInitialized = true;
+    
+    jQuery(document).ready(function($) {
+        // Year selection handler
+        $(document).on('click', '.heatmap-section:not(.heatmap-monthly):not(.heatmap-vertical-section) .heatmap-year-list a', function(event) {
+            event.preventDefault();
+            const $section = $(this).closest('.heatmap-section:not(.heatmap-monthly):not(.heatmap-vertical-section)');
+            const widgetId = $section.data('widget-id');
+            
+            $.ajax({
+                url: $(this).attr('href'),
+                type: 'GET',
+                data: {
+                    "search_year": $(this).attr('data-search-year'),
+                    "widget_id_preserve": widgetId
+                },
+                dataType: 'html',
+                success: function(resp) {
+                    const $tempContainer = $('<div>').html(resp);
+                    const $newHeatmapSection = $tempContainer.find('.heatmap-section:not(.heatmap-monthly):not(.heatmap-vertical-section)').first();
+                    
+                    if ($newHeatmapSection.length === 0) {
+                        console.error('No heatmap section found in response');
+                        return;
+                    }
+                    
+                    // Preserve the original widget ID
+                    $newHeatmapSection.attr('data-widget-id', widgetId);
+                    
+                    // Replace the section
+                    $section.replaceWith($newHeatmapSection);
+                    
+                    // Mark as initialized
+                    $newHeatmapSection.attr('data-initialized', 'true');
+                    
+                    const outputData = $newHeatmapSection.data("outputData");
+                    const postsLevel = $newHeatmapSection.data("postsLevel");
+                    const firstDate = $newHeatmapSection.data("firstDate");
+                    const lastDate = $newHeatmapSection.data("lastDate");
+                    
+                    const heatmapElement = $newHeatmapSection.find('[data-role="heatmap"]')[0];
+                    if (heatmapElement) {
+                        $(heatmapElement).empty();
+                        window.HeatmapDefault.createHeatmap(heatmapElement, outputData, postsLevel, firstDate, lastDate);
+                    }
+                },
+                error: function(request, status, error) {
+                    alert('code: ' + request.status + '\n' + 'message: ' + request.responseText + '\n' + 'error: ' + error);
                 }
-            },
-            error: function(request, status, error) {
-                console.error('Error fetching documents:', error);
-                $('#documents-list-container').html('<div class="documents-list-empty"><div class="documents-empty-text">문서를 불러오는데 실패했습니다.</div></div>');
-            }
+            });
+        });
+
+        // Day cell click handler
+        $(document).on('click', '.heatmap-section:not(.heatmap-monthly):not(.heatmap-vertical-section) .day', function(event) {
+            event.preventDefault();
+            const $dayCell = $(this);
+            const dateStr = $dayCell.data('date');
+            
+            if (!dateStr) return;
+            
+            const $section = $dayCell.closest('.heatmap-section:not(.heatmap-monthly):not(.heatmap-vertical-section)');
+            const widgetId = $section.data('widget-id');
+            const $documentsContainer = $section.find('[data-role="documents-list-container"]');
+            
+            // Toggle active cell within this widget only
+            $section.find('.day').removeClass('active');
+            $dayCell.addClass('active');
+            
+            // Display loading indicator
+            $documentsContainer.html('<div class="documents-list-loading" style="text-align: center; padding: 20px;">Loading...</div>');
+            
+            $.ajax({
+                url: window.location.href,
+                type: 'GET',
+                data: {
+                    "written_at": dateStr,
+                    "widget_id": widgetId
+                },
+                dataType: 'json',
+                success: function(resp) {
+                    if (resp.success) {
+                        window.HeatmapDefault.renderDocumentsList($documentsContainer[0], resp.documents, resp.date, resp.count);
+                    } else {
+                        $documentsContainer.html('<div class="documents-list-empty"><div class="documents-empty-text">오류가 발생했습니다.</div></div>');
+                    }
+                },
+                error: function(request, status, error) {
+                    console.error('Error fetching documents:', error);
+                    $documentsContainer.html('<div class="documents-list-empty"><div class="documents-empty-text">문서를 불러오는데 실패했습니다.</div></div>');
+                }
+            });
         });
     });
-});
+}
 
-function createHeatmap(elementId, heatmapData, postsLevel, firstDate, lastDate) {
+window.HeatmapDefault.createHeatmap = function(heatmapElement, heatmapData, postsLevel, firstDate, lastDate) {
 
     const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -80,7 +119,7 @@ function createHeatmap(elementId, heatmapData, postsLevel, firstDate, lastDate) 
         }
     }
 
-    const heatmap = document.getElementById(elementId);
+    const heatmap = heatmapElement;
 
     /* row head: weekday label */
     for (let i=0; i<MAX_ROW; i++) {
@@ -94,6 +133,7 @@ function createHeatmap(elementId, heatmapData, postsLevel, firstDate, lastDate) 
         heatmap.appendChild(div);
     }
 
+    console.log("firstDate:", firstDate, "lastDate:", lastDate);
     const currDate = new Date(firstDate);
     let printMonthLabel = true;
     /* to avoid overlapping first two month labels */
@@ -125,7 +165,9 @@ function createHeatmap(elementId, heatmapData, postsLevel, firstDate, lastDate) 
                 continue;
             }
             /* check for the last cell */
-            if (currDate >= new Date(lastDate)) {
+            if (currDate > new Date(lastDate)) {
+                console.log("Reached the end date:", currDate.toISOString().split('T')[0]);
+                console.log("Curr date:", currDate, "Last date:", lastDate);
                 break;
             }
 
@@ -158,8 +200,8 @@ function createHeatmap(elementId, heatmapData, postsLevel, firstDate, lastDate) 
     }
 }
 
-function renderDocumentsList(documents, dateStr, count) {
-    const container = document.getElementById('documents-list-container');
+window.HeatmapDefault.renderDocumentsList = function(container, documents, dateStr, count) {
+    if (!container) return;
     
     if (!documents || documents.length === 0) {
         container.innerHTML = `
@@ -174,7 +216,7 @@ function renderDocumentsList(documents, dateStr, count) {
     // Header of the documents list
     let html = `
         <div class="documents-list-header">
-            <span class="documents-list-date">📅 ${formatDate(dateStr)}</span>
+            <span class="documents-list-date">📅 ${window.HeatmapDefault.formatDate(dateStr)}</span>
             <span class="documents-list-count">${count}개의 문서</span>
         </div>
         <div class="documents-list-items">
@@ -185,9 +227,9 @@ function renderDocumentsList(documents, dateStr, count) {
         const time = doc.regdate;
         html += `
             <div class="documents-item">
-                <a href="${escapeHtml(doc.url)}" class="documents-item-link" target="_blank">
-                    <span class="documents-module-title">${decodeHtml(doc.module_title)}</span>
-                    <span class="documents-item-title">${decodeHtml(doc.title)}</span>
+                <a href="${window.HeatmapDefault.escapeHtml(doc.url)}" class="documents-item-link" target="_blank">
+                    <span class="documents-module-title">${window.HeatmapDefault.decodeHtml(doc.module_title)}</span>
+                    <span class="documents-item-title">${window.HeatmapDefault.decodeHtml(doc.title)}</span>
                     <div class="documents-item-stats">
                         <span class="documents-item-stat">💬 ${doc.comments}</span>
                         <span class="documents-item-stat">👁 ${doc.views}</span>
@@ -205,24 +247,22 @@ function renderDocumentsList(documents, dateStr, count) {
     container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
-// Date formatting function
-function formatDate(dateStr) {
+// Helper functions
+window.HeatmapDefault.formatDate = function(dateStr) {
     const year = dateStr.substring(0, 4);
     const month = dateStr.substring(5, 7);
     const day = dateStr.substring(8, 10);
     return `${year}년 ${month}월 ${day}일`;
 }
 
-// HTML escape function
-function escapeHtml(text) {
+window.HeatmapDefault.escapeHtml = function(text) {
     if (!text) return '';
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
 }
 
-// HTML decode function (converts entities to actual characters)
-function decodeHtml(html) {
+window.HeatmapDefault.decodeHtml = function(html) {
     if (!html) return '';
     const txt = document.createElement('textarea');
     txt.innerHTML = html;

@@ -1,28 +1,29 @@
+/* Default skin specific styles - namespace to avoid conflicts */
 
-.heatmap-head {
+.heatmap-section .heatmap-head {
     display: flex;
     justify-content: space-between;
     margin: 4px 4px;
     padding: 0px 4px;
 }
 
-.heatmap-title {
+.heatmap-section .heatmap-title {
     font-family: "IBM Plex Mono", monospace;
     font-size: 12px;
     color: #333;
 }
 
-.darkmode .heatmap-title {
+.darkmode .heatmap-section .heatmap-title {
     color: #ddd;
 }
 
-.heatmap-year {
+.heatmap-section .heatmap-year {
     position : relative;
     display : inline-block;
     min-width: 80px;
 }
 
-.heatmap-year-button {
+.heatmap-section .heatmap-year-button {
     display: flex;
     justify-content: end;
     font-family: "IBM Plex Mono", monospace;
@@ -31,16 +32,16 @@
     color: #333;
 }
 
-.darkmode .heatmap-year-button {
+.darkmode .heatmap-section .heatmap-year-button {
     color: #ddd;
 }
 
-.darkmode .heatmap-year-list {
+.darkmode .heatmap-section .heatmap-year-list {
     background-color: #343434;
     border-color: #ddd;
 }
 
-.heatmap-year-list {
+.heatmap-section .heatmap-year-list {
     display : none;
     justify-content: center;
     position : absolute;
@@ -61,24 +62,24 @@
     overflow-y: auto;
 }
 
-.heatmap-year:hover .heatmap-year-list {
+.heatmap-section .heatmap-year:hover .heatmap-year-list {
     display: block;
 }
 
-.heatmap-year-list a {
+.heatmap-section .heatmap-year-list a {
     display: block;
     padding: 2px;
 }
 
-.heatmap-year-list a:hover {
+.heatmap-section .heatmap-year-list a:hover {
     color: skyblue;
 }
 
-.darkmode .heatmap-wrapper {
+.darkmode .heatmap-section .heatmap-wrapper {
     background-color: #343434;
 }
 
-.heatmap-wrapper {
+.heatmap-section .heatmap-wrapper {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -90,7 +91,7 @@
     overflow-x: auto;
 }
 
-.heatmap-container {
+.heatmap-section .heatmap-container {
     display: flex;
     justify-content: center;
     margin-left: auto;
@@ -99,7 +100,7 @@
     margin-bottom: 4px;
 }
 
-.heatmap {
+.heatmap-section .heatmap {
     display: grid;
     grid-template-columns: repeat(54, 10px);
     grid-template-rows: repeat(8, 10px);
@@ -109,7 +110,7 @@
     width: 100%;
 }
 
-.day {
+.heatmap-section .day {
     background-color: #ebedf0;
     position: relative;
     border-radius: 2px;
@@ -117,15 +118,15 @@
     cursor: pointer;
 }
 
-.day.active {
+.heatmap-section .day.active {
     box-shadow: 0 0 0 2px #239a3b;
 }
 
-.darkmode .day.active {
+.darkmode .heatmap-section .day.active {
     box-shadow: 0 0 0 2px #26a641;
 }
 
-.day .tooltip {
+.heatmap-section .day .tooltip {
     visibility: hidden;
     width: 100px;
     background-color: #1a1a1a;
@@ -145,11 +146,11 @@
     font-size: 11px;
 }
 
-.day:hover .tooltip {
+.heatmap-section .day:hover .tooltip {
     visibility: visible;
 }
 
-.month-label {
+.heatmap-section .month-label {
     background-color: transparent;
     position: relative;
     border-radius: 2px;
@@ -159,11 +160,11 @@
     color: #333;
 }
 
-.darkmode .month-label {
+.darkmode .heatmap-section .month-label {
     color: #ddd;
 }
 
-.weekday-label {
+.heatmap-section .weekday-label {
     display: flex;
     align-items: center;
     position: relative;
@@ -175,23 +176,23 @@
     color: #333;
 }
 
-.darkmode .weekday-label {
+.darkmode .heatmap-section .weekday-label {
     color: #ddd;
 }
 
-.darkmode .day.level-0 { background-color: #161b22; }
-.darkmode .day.level-1 { background-color: #0e4429; }
-.darkmode .day.level-2 { background-color: #006d32; }
-.darkmode .day.level-3 { background-color: #26a641; }
-.darkmode .day.level-4 { background-color: #39d353; }
+.darkmode .heatmap-section .day.level-0 { background-color: #161b22; }
+.darkmode .heatmap-section .day.level-1 { background-color: #0e4429; }
+.darkmode .heatmap-section .day.level-2 { background-color: #006d32; }
+.darkmode .heatmap-section .day.level-3 { background-color: #26a641; }
+.darkmode .heatmap-section .day.level-4 { background-color: #39d353; }
 
-.day.level-0 { background-color: #ebedf0; }
-.day.level-1 { background-color: #c6e48b; }
-.day.level-2 { background-color: #7bc96f; }
-.day.level-3 { background-color: #239a3b; }
-.day.level-4 { background-color: #196127; }
+.heatmap-section .day.level-0 { background-color: #ebedf0; }
+.heatmap-section .day.level-1 { background-color: #c6e48b; }
+.heatmap-section .day.level-2 { background-color: #7bc96f; }
+.heatmap-section .day.level-3 { background-color: #239a3b; }
+.heatmap-section .day.level-4 { background-color: #196127; }
 
-.color-label-container {
+.heatmap-section .color-label-container {
     display: flex;
     justify-content: start;
     align-items: center;
@@ -200,24 +201,24 @@
     gap: 4px;
 }
 
-.color-label-cell {
+.heatmap-section .color-label-cell {
     width: 13px;
     height: 13px;
     border-radius: 3px;
 }
 
-.color-label-text {
+.heatmap-section .color-label-text {
     font-family: "IBM Plex Mono", monospace;
     font-size: 11px;
     margin: 0px 2px;
     color: #333;
 }
 
-.darkmode .color-label-text {
+.darkmode .heatmap-section .color-label-text {
     color: #ddd;
 }
 
-.dropdown-caret {
+.heatmap-section .dropdown-caret {
     border-bottom-color: #0000;
     border-left-color: #0000;
     border-right-color: #0000;
@@ -227,7 +228,7 @@
     margin-left: 4px;
 }
 
-.heatmap-overlay {
+.heatmap-section .heatmap-overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -237,7 +238,7 @@
     z-index: 2;
 }
 
-.heatmap-login {
+.heatmap-section .heatmap-login {
     position: absolute;
     display: flex;
     top: 50%;
@@ -251,7 +252,7 @@
     text-align: center;
 }
 
-.heatmap-login a {
+.heatmap-section .heatmap-login a {
     padding: 10px 20px;
     background-color: #007bff;
     color: white;
@@ -261,19 +262,19 @@
     width: 100px;
 }
 
-.heatmap-login a:hover {
+.heatmap-section .heatmap-login a:hover {
     background-color: #0056b3;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-.heatmap-documents-container {
+.heatmap-section .heatmap-documents-container {
     width: 100%;
     padding: 0px;
     margin: 10px auto 40px;
 }
 
 /* 문서 목록 헤더 */
-.documents-list-header {
+.heatmap-section .documents-list-header {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -283,62 +284,62 @@
     margin-bottom: 8px;
 }
 
-.darkmode .documents-list-header {
+.darkmode .heatmap-section .documents-list-header {
     background: linear-gradient(135deg, #2a2a2a 0%, #333333 100%);
     border-left-color: #26a641;
 }
 
-.documents-list-date {
+.heatmap-section .documents-list-date {
     font-size: 13px;
     font-weight: 600;
     color: #666;
 }
 
-.darkmode .documents-list-date {
+.darkmode .heatmap-section .documents-list-date {
     color: #aaa;
 }
 
-.documents-list-count {
+.heatmap-section .documents-list-count {
     font-size: 12px;
     color: #999;
 }
 
-.darkmode .documents-list-count {
+.darkmode .heatmap-section .documents-list-count {
     color: #888;
 }
 
 /* 문서 목록 아이템들 */
-.documents-list-items {
+.heatmap-section .documents-list-items {
     display: flex;
     flex-direction: column;
     gap: 4px;
 }
 
 /* 개별 문서 아이템 */
-.documents-item {
+.heatmap-section .documents-item {
     border: 1px solid #e0e0e0;
     border-radius: 4px;
     overflow: hidden;
     transition: all 0.2s ease;
 }
 
-.darkmode .documents-item {
+.darkmode .heatmap-section .documents-item {
     border-color: #444;
 }
 
-.documents-item:hover {
+.heatmap-section .documents-item:hover {
     border-color: #7bc96f;
     box-shadow: 0 2px 8px rgba(123, 201, 111, 0.2);
     background-color: #f9f9f9;
 }
 
-.darkmode .documents-item:hover {
+.darkmode .heatmap-section .documents-item:hover {
     border-color: #26a641;
     box-shadow: 0 2px 8px rgba(38, 166, 65, 0.2);
     background-color: #2a2a2a;
 }
 
-.documents-item-link {
+.heatmap-section .documents-item-link {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -349,20 +350,20 @@
     transition: background-color 0.2s;
 }
 
-.darkmode .documents-item-link {
+.darkmode .heatmap-section .documents-item-link {
     background-color: transparent;
 }
 
-.documents-item-link:hover {
+.heatmap-section .documents-item-link:hover {
     background-color: transparent;
 }
 
-.darkmode .documents-item-link:hover {
+.darkmode .heatmap-section .documents-item-link:hover {
     background-color: transparent;
 }
 
 /* 문서 항목 헤더 (게시판명) */
-.documents-module-title {
+.heatmap-section .documents-module-title {
     display: inline-block;
     font-size: 11px;
     font-weight: 600;
@@ -374,13 +375,13 @@
     flex-shrink: 0;
 }
 
-.darkmode .documents-module-title {
+.darkmode .heatmap-section .documents-module-title {
     background-color: #333;
     color: #aaa;
 }
 
 /* 문서 제목 */
-.documents-item-title {
+.heatmap-section .documents-item-title {
     font-size: 13px;
     font-weight: 500;
     color: #222;
@@ -391,12 +392,12 @@
     margin-right: auto;
 }
 
-.darkmode .documents-item-title {
+.darkmode .heatmap-section .documents-item-title {
     color: #f0f0f0;
 }
 
 /* 문서 메타 정보 */
-.documents-item-stats {
+.heatmap-section .documents-item-stats {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -405,46 +406,46 @@
     flex-shrink: 0;
 }
 
-.darkmode .documents-item-stats {
+.darkmode .heatmap-section .documents-item-stats {
     color: #777;
 }
 
-.documents-item-stat {
+.heatmap-section .documents-item-stat {
     display: flex;
     align-items: center;
     gap: 3px;
     white-space: nowrap;
 }
 
-.documents-item-time {
+.heatmap-section .documents-item-time {
     font-size: 11px;
     color: #999;
     white-space: nowrap;
     flex-shrink: 0;
 }
 
-.darkmode .documents-item-time {
+.darkmode .heatmap-section .documents-item-time {
     color: #777;
 }
 
 /* 비어있는 상태 */
-.documents-list-empty {
+.heatmap-section .documents-list-empty {
     text-align: center;
     padding: 30px 20px;
     color: #999;
 }
 
-.documents-empty-icon {
+.heatmap-section .documents-empty-icon {
     font-size: 32px;
     margin-bottom: 12px;
 }
 
-.documents-empty-text {
+.heatmap-section .documents-empty-text {
     font-size: 12px;
 }
 
 /* Legacy 테이블 스타일 (데이터 형식 호환성) */
-.documents-table {
+.heatmap-section .documents-table {
     width: 100%;
     border-collapse: collapse;
     font-family: "IBM Plex Mono", monospace;
@@ -455,95 +456,95 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.darkmode .documents-table {
+.darkmode .heatmap-section .documents-table {
     background-color: #2d2d2d;
 }
 
-.documents-table thead {
+.heatmap-section .documents-table thead {
     background-color: #f0f0f0;
     border-bottom: 2px solid #ddd;
 }
 
-.darkmode .documents-table thead {
+.darkmode .heatmap-section .documents-table thead {
     background-color: #3d3d3d;
     border-bottom: 2px solid #555;
 }
 
-.documents-table thead tr:first-child th {
+.heatmap-section .documents-table thead tr:first-child th {
     padding: 12px;
     text-align: left;
     font-weight: bold;
 }
 
-.documents-date {
+.heatmap-section .documents-date {
     background-color: #e8f4f8;
     color: #0056b3;
     font-weight: bold;
     padding: 12px;
 }
 
-.darkmode .documents-date {
+.darkmode .heatmap-section .documents-date {
     background-color: #1e5a6e;
     color: #6dcdff;
 }
 
-.documents-table tbody tr {
+.heatmap-section .documents-table tbody tr {
     border-bottom: 1px solid #eee;
     transition: background-color 0.2s;
 }
 
-.darkmode .documents-table tbody tr {
+.darkmode .heatmap-section .documents-table tbody tr {
     border-bottom: 1px solid #444;
 }
 
-.documents-table tbody tr:hover {
+.heatmap-section .documents-table tbody tr:hover {
     background-color: #f9f9f9;
 }
 
-.darkmode .documents-table tbody tr:hover {
+.darkmode .heatmap-section .documents-table tbody tr:hover {
     background-color: #3d3d3d;
 }
 
-.documents-table td {
+.heatmap-section .documents-table td {
     padding: 10px 12px;
 }
 
-.documents-col-title {
+.heatmap-section .documents-col-title {
     width: 70%;
     font-weight: 600;
 }
 
-.documents-col-date {
+.heatmap-section .documents-col-date {
     width: 30%;
     text-align: right;
     font-weight: 600;
     color: #666;
 }
 
-.darkmode .documents-col-date {
+.darkmode .heatmap-section .documents-col-date {
     color: #aaa;
 }
 
-.documents-title {
+.heatmap-section .documents-title {
     word-break: break-word;
     color: #333;
 }
 
-.darkmode .documents-title {
+.darkmode .heatmap-section .documents-title {
     color: #ddd;
 }
 
-.documents-time {
+.heatmap-section .documents-time {
     text-align: right;
     color: #666;
     font-size: 11px;
 }
 
-.darkmode .documents-time {
+.darkmode .heatmap-section .documents-time {
     color: #999;
 }
 
-.documents-no-data {
+.heatmap-section .documents-no-data {
     text-align: center;
     color: #999;
     padding: 20px;

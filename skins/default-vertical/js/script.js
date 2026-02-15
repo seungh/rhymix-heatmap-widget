@@ -1,29 +1,63 @@
-jQuery(document).ready(function($) {
-	$(document).on('click', '.heatmap-vertical-year-list a', function(event) {
-		event.preventDefault();
-		$.ajax({
-			url: $(this).attr('href'),
-            type: 'GET',
-            data: {"search_year": $(this).attr('data-search-year')},
-            dataType: 'html',
-			success: function(resp) {
-                const newHeatmapSection = $(resp).find('.heatmap-vertical-section');
-                $('.heatmap-vertical-section').replaceWith(newHeatmapSection);
-                const outputData = $(resp).find('.heatmap-vertical-section').data("outputData");
-                const postsLevel = $(resp).find('.heatmap-vertical-section').data("postsLevel");
-                const firstDate = $(resp).find('.heatmap-vertical-section').data("firstDate");
-                const lastDate = $(resp).find('.heatmap-vertical-section').data("lastDate");
-                $(".heatmap-vertical").empty();
-                createHeatmapVertical('heatmap-vertical', outputData, postsLevel, firstDate, lastDate);
-			},
-			error: function(request, status, error) {
-				alert('code: ' + request.status + '\n' + 'message: ' + request.responseText + '\n' + 'error: ' + error);
-			}
+// Default-vertical skin namespace to avoid conflicts
+window.HeatmapVertical = window.HeatmapVertical || {};
+
+// Store event handlers to prevent duplicate registration
+if (!window.heatmapVerticalHandlersInitialized) {
+	window.heatmapVerticalHandlersInitialized = true;
+	
+	jQuery(document).ready(function($) {
+		// Year selection handler
+		$(document).on('click', '.heatmap-vertical-section .heatmap-vertical-year-list a', function(event) {
+			event.preventDefault();
+			const $section = $(this).closest('.heatmap-vertical-section');
+			const widgetId = $section.data('widget-id');
+			
+			$.ajax({
+				url: $(this).attr('href'),
+				type: 'GET',
+				data: {
+					"search_year": $(this).attr('data-search-year'),
+					"widget_id_preserve": widgetId
+				},
+				dataType: 'html',
+				success: function(resp) {
+					const $tempContainer = $('<div>').html(resp);
+					const $newHeatmapSection = $tempContainer.find('.heatmap-vertical-section').first();
+					
+					if ($newHeatmapSection.length === 0) {
+						console.error('No heatmap vertical section found in response');
+						return;
+					}
+					
+					// Preserve the original widget ID
+					$newHeatmapSection.attr('data-widget-id', widgetId);
+					
+					// Replace the section
+					$section.replaceWith($newHeatmapSection);
+					
+					// Mark as initialized
+					$newHeatmapSection.attr('data-initialized', 'true');
+					
+					const outputData = $newHeatmapSection.data("outputData");
+					const postsLevel = $newHeatmapSection.data("postsLevel");
+					const firstDate = $newHeatmapSection.data("firstDate");
+					const lastDate = $newHeatmapSection.data("lastDate");
+					
+					const heatmapElement = $newHeatmapSection.find('[data-role="heatmap-vertical"]')[0];
+					if (heatmapElement) {
+						$(heatmapElement).empty();
+						window.HeatmapVertical.createHeatmap(heatmapElement, outputData, postsLevel, firstDate, lastDate);
+					}
+				},
+				error: function(request, status, error) {
+					alert('code: ' + request.status + '\n' + 'message: ' + request.responseText + '\n' + 'error: ' + error);
+				}
+			});
 		});
 	});
-});
+}
 
-function createHeatmapVertical(elementId, heatmapData, postsLevel, firstDate, lastDate) {
+window.HeatmapVertical.createHeatmap = function(heatmapElement, heatmapData, postsLevel, firstDate, lastDate) {
 
     const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -44,7 +78,7 @@ function createHeatmapVertical(elementId, heatmapData, postsLevel, firstDate, la
         }
     }
 
-    const heatmap = document.getElementById(elementId);
+    const heatmap = heatmapElement;
 
     const currDate = new Date(firstDate + "T01:00Z");
     let printMonthLabel = true;
