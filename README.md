@@ -2,10 +2,11 @@
 Github-style heatmap widget for Rhymix
 
 ## 소개
-게시글 수를 기반으로 Github 스타일의 히트맵을 보여주는 라이믹스 위젯입니다. 
+본인이 작성한 게시글 수를 기반으로 Github 스타일의 히트맵을 보여주는 라이믹스 위젯입니다. 
 
-<img src="https://github.com/user-attachments/assets/baaf2ea5-845d-4bb1-844b-212ff3da2728" width="600">
-<img src="https://github.com/user-attachments/assets/25fdc25a-acab-4e4a-9737-e9c7dde11405" width="600">
+<img src="https://github.com/user-attachments/assets/baaf2ea5-845d-4bb1-844b-212ff3da2728" width="600"> \
+<img src="https://github.com/user-attachments/assets/25fdc25a-acab-4e4a-9737-e9c7dde11405" width="600"> \
+<img alt="calendar_skin" src="https://github.com/user-attachments/assets/3195f80b-12e2-4da5-8fe7-8d2ee88e505b" width="200">
 
 ## 설치방법
 * 설치경로: `./widgets/heatmap`
@@ -21,6 +22,7 @@ git pull
 ```
 * 라이믹스 2.1.8 이상에서 동작합니다.
 * PHP 8.2 및 라이믹스 2.1.16 환경에서 테스트했습니다.
+* PHP 8.3 및 라이믹스 2.1.30 환경에서 테스트했습니다.
 
 ## 설정방법
 * 스킨 (required): 사용할 스킨을 선택합니다. 
@@ -33,3 +35,4 @@ git pull
 
 ## 라이센스
 GPL v3
+
